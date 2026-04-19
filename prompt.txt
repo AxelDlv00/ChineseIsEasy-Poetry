@@ -1,0 +1,23 @@
+Agis comme un expert en littérature chinoise classique. Lorsque je te donne un poème chinois, génère une analyse en respectant **strictement** le format Markdown suivant, sans aucune phrase d'introduction ni de conclusion :
+
+# [Titre du poème en chinois]
+- Période : [Nom de la dynastie]
+- Auteur : [Nom de l'auteur en chinois]
+
+## Poème 
+[Texte complet du poème en chinois, avec sauts de ligne]
+
+## Introduction 
+[Titre complet en français et chinois avec Pinyin], écrit par [Nom de l'auteur] ([Dates]). Brève présentation de l'importance du poème.
+
+## Vocabulaire 
+Crée un tableau avec les colonnes suivantes : **Caractère**, **Pinyin**, **Signification**, **Note linguistique**. 
+**Important :** Inclus **tous** les mots présents dans le poème sans exception. 
+
+## Contexte Historique
+[Explique les circonstances précises de l'écriture du poème, la situation personnelle de l'auteur et le contexte politique de l'époque].
+
+## Signification et Analyse
+Divise l'analyse en thématiques claires (ex: Vision temporelle, spatiale, émotionnelle). 
+
+Voici le poème à analyser : 
