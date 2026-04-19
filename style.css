@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "AR PL KaitiM GB";
+    src: url("https://db.onlinewebfonts.com/t/157c7e79f7f057bbeacf5f113b964875.eot");
+    src: url("https://db.onlinewebfonts.com/t/157c7e79f7f057bbeacf5f113b964875.eot?#iefix") format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/157c7e79f7f057bbeacf5f113b964875.woff2") format("woff2"),
+    url("https://db.onlinewebfonts.com/t/157c7e79f7f057bbeacf5f113b964875.woff") format("woff"),
+    url("https://db.onlinewebfonts.com/t/157c7e79f7f057bbeacf5f113b964875.ttf") format("truetype"),
+    url("https://db.onlinewebfonts.com/t/157c7e79f7f057bbeacf5f113b964875.svg#AR PL KaitiM GB") format("svg");
+}
+
 :root { 
     --accent: #438d67; 
     --bg: #f1f2f6;
@@ -11,13 +21,20 @@
 * { box-sizing: border-box; }
 
 body { 
-    font-family: 'Inter', -apple-system, sans-serif; 
+    /* Application globale de la police Arphic pour le chinois */
+    font-family: 'Inter', "AR PL KaitiM GB", sans-serif; 
     background: var(--bg); 
     color: var(--text-main);
     margin: 0; 
     padding: 0;
     display: flex;
     height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Force la police sur tous les éléments textuels (titres, menus, tooltips) */
+h1, h2, h3, h4, .sidebar, .tooltip, .markdown-body, .poem-list li {
+    font-family: 'Inter', "AR PL KaitiM GB", sans-serif;
 }
 
 .layout {
@@ -181,12 +198,16 @@ body {
     width: 60px;
     height: 60px;
     cursor: default;
-    border: none;
     border-radius: 8px;
     transition: transform 0.2s ease, background 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    
+    /* Taille spécifique pour le poème */
+    font-size: 46px; 
+    font-family: "AR PL KaitiM GB", serif;
+    line-height: 1;
 }
 
 .char-cell[data-word-id] {
@@ -195,7 +216,7 @@ body {
 
 .char-punct {
     font-size: 24px;
-    line-height: 60px;
+    font-family: 'Inter', sans-serif;
 }
 
 .highlighted-word {

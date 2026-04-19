@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Poèmes Chinois — Liseuse Interactive</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
-    <script src="hanzi-writer.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-
     <div class="layout">
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -25,24 +26,18 @@
             <div class="top-bar">
                 <button id="open-sidebar" class="menu-btn">☰ Menu</button>
             </div>
-            
             <div id="poem-container" class="card hidden">
                 <div id="md-header"></div>
-                
                 <div id="calligraphy-poem" class="poem-grid"></div>
-                
                 <div id="md-content" class="markdown-body"></div>
             </div>
-            
             <div id="welcome-message" class="card description">
-                Sélectionnez un poème dans la barre latérale pour commencer la lecture. 
-                Survolez les caractères pour voir leur signification.
+                Sélectionnez un poème dans la barre latérale pour commencer la lecture.
+                <br>Survolez les caractères pour voir leur signification.
             </div>
         </main>
     </div>
-
     <div id="tooltip" class="tooltip"></div>
-
     <script src="script.js"></script>
 </body>
 </html>

@@ -84,7 +84,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             
             configureMarked(folder);
-            
             parseAndRender(markdown);
             
             welcomeMessage.classList.add('hidden');
@@ -206,16 +205,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
+    // FONCTION SIMPLIFIÉE
     function createCharCell(char, isChinese) {
         const cell = document.createElement('div');
         cell.className = 'char-cell';
         
         if (isChinese) {
-            HanziWriter.create(cell, char, {
-                width: 60, height: 60, padding: 5,
-                showOutline: false, showCharacter: true,
-                strokeColor: '#2f3542', strokeAnimationSpeed: 0, delayBetweenStrokes: 0
-            });
+            cell.textContent = char;
         } else {
             cell.innerHTML = `<span class="char-punct">${char}</span>`;
             cell.style.width = 'auto';
