@@ -21,7 +21,6 @@
 * { box-sizing: border-box; }
 
 body { 
-    /* Application globale de la police Arphic pour le chinois */
     font-family: 'Inter', "AR PL KaitiM GB", sans-serif; 
     background: var(--bg); 
     color: var(--text-main);
@@ -32,7 +31,6 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Force la police sur tous les éléments textuels (titres, menus, tooltips) */
 h1, h2, h3, h4, .sidebar, .tooltip, .markdown-body, .poem-list li {
     font-family: 'Inter', "AR PL KaitiM GB", sans-serif;
 }
@@ -179,51 +177,37 @@ h1, h2, h3, h4, .sidebar, .tooltip, .markdown-body, .poem-list li {
     letter-spacing: 0.5px;
 }
 
+/* Nouvelles règles pour le poème */
 .poem-grid {
-    margin: 30px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    margin: 20px 0;
+    text-align: center;
+    line-height: 1.2;
 }
 
 .poem-verse {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2px;
-}
-
-.char-cell {
-    width: 60px;
-    height: 60px;
-    cursor: default;
-    border-radius: 8px;
-    transition: transform 0.2s ease, background 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    /* Taille spécifique pour le poème */
     font-size: 46px; 
     font-family: "AR PL KaitiM GB", serif;
-    line-height: 1;
+    margin-bottom: 2px;
+    word-break: break-word; /* Permet un retour à la ligne sécurisé sur mobile */
 }
 
-.char-cell[data-word-id] {
+.poem-word {
     cursor: help;
+    transition: color 0.2s ease;
 }
 
-.char-punct {
+/* L'effet de survol ne modifie que la couleur du texte */
+.poem-word:hover {
+    color: var(--accent);
+}
+
+.poem-punct {
     font-size: 24px;
     font-family: 'Inter', sans-serif;
+    margin: 0 5px;
 }
 
-.highlighted-word {
-    transform: scale(1.1);
-    background: rgba(67, 141, 103, 0.15);
-    z-index: 10;
-}
+/* -------------------------------- */
 
 .markdown-body {
     line-height: 1.6;
@@ -294,8 +278,9 @@ h1, h2, h3, h4, .sidebar, .tooltip, .markdown-body, .poem-list li {
         transform: translateX(0); 
     }
     
-    .char-cell { width: 40px; height: 40px; }
-    .char-punct { font-size: 18px; line-height: 40px;}
+    /* Réduction de la taille de police pour mobile au lieu des cases fixes */
+    .poem-verse { font-size: 32px; }
+    .poem-punct { font-size: 18px; }
     
     .tooltip { max-width: 90vw; }
 }

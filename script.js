@@ -155,7 +155,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         container.innerHTML = '';
         
         const verses = text.split(/\n\s*\n|\n/).filter(l => l.trim() !== '');
-        let wordIdCounter = 0; 
 
         verses.forEach(line => {
             const row = document.createElement('div');
@@ -167,6 +166,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             while (i < chars.length) {
                 let matchFound = false;
 
+                // Search for the longest possible word (max 4 characters)
                 for (let len = 4; len >= 1; len--) {
                     if (i + len > chars.length) continue;
                     
@@ -175,29 +175,28 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                     if (info) {
                         matchFound = true;
-                        wordIdCounter++;
-                        const currentWordId = `word-${wordIdCounter}`;
-
-                        for (let j = 0; j < len; j++) {
-                            const char = chars[i + j];
-                            const cell = createCharCell(char, true);
-                            cell.dataset.wordId = currentWordId; 
-                            row.appendChild(cell);
-                            
-                            setupWordHighlight(cell, currentWordId);
-                            setupTooltip(cell, info);
-                        }
+                        
+                        const wordSpan = document.createElement('span');
+                        wordSpan.className = 'poem-word';
+                        wordSpan.textContent = word;
+                        
+                        setupTooltip(wordSpan, info);
+                        row.appendChild(wordSpan);
                         
                         i += len; 
                         break;
                     }
                 }
 
+                // If no word is found (e.g., punctuation or unknown character)
                 if (!matchFound) {
                     const char = chars[i];
-                    const isChinese = char.match(/[\u4E00-\u9FFF]/);
-                    const cell = createCharCell(char, isChinese);
-                    row.appendChild(cell);
+                    
+                    // Treat it as normal text, no special punctuation class
+                    const charSpan = document.createElement('span');
+                    charSpan.textContent = char;
+                    row.appendChild(charSpan);
+                    
                     i++;
                 }
             }
@@ -205,45 +204,38 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // FONCTION SIMPLIFIÉE
-    function createCharCell(char, isChinese) {
-        const cell = document.createElement('div');
-        cell.className = 'char-cell';
-        
-        if (isChinese) {
-            cell.textContent = char;
-        } else {
-            cell.innerHTML = `<span class="char-punct">${char}</span>`;
-            cell.style.width = 'auto';
-            cell.style.minWidth = '20px';
-        }
-        return cell;
-    }
-
-    function setupWordHighlight(cell, wordId) {
-        cell.addEventListener('mouseenter', () => {
-            document.querySelectorAll(`[data-word-id="${wordId}"]`).forEach(el => {
-                el.classList.add('highlighted-word');
-            });
-        });
-        cell.addEventListener('mouseleave', () => {
-            document.querySelectorAll(`[data-word-id="${wordId}"]`).forEach(el => {
-                el.classList.remove('highlighted-word');
-            });
-        });
-    }
-
     function setupTooltip(element, data) {
-        element.addEventListener('mouseenter', (e) => {
+        element.addEventListener('mouseenter', () => {
             tooltip.innerHTML = `
                 <div class="pinyin">${data.pinyin}</div>
                 <div class="meaning">${data.meaning}</div>
                 ${data.note ? `<div class="note">${data.note}</div>` : ''}
             `;
             
+            // Calculer les dimensions
             const rect = element.getBoundingClientRect();
-            tooltip.style.left = rect.left + (rect.width / 2) + window.scrollX + 'px';
-            tooltip.style.top = rect.top + window.scrollY - 10 + 'px';
+            const tooltipRect = tooltip.getBoundingClientRect();
+            
+            // Position de base (centrée au dessus du mot)
+            let leftPos = rect.left + (rect.width / 2) + window.scrollX;
+            let topPos = rect.top + window.scrollY - 10;
+            
+            // Ajustement mobile (éviter de sortir de l'écran horizontalement)
+            const margin = 10;
+            const minLeft = margin + window.scrollX;
+            const maxRight = window.innerWidth - margin + window.scrollX;
+            
+            let tooltipLeftEdge = leftPos - (tooltipRect.width / 2);
+            let tooltipRightEdge = leftPos + (tooltipRect.width / 2);
+            
+            if (tooltipLeftEdge < minLeft) {
+                leftPos = minLeft + (tooltipRect.width / 2);
+            } else if (tooltipRightEdge > maxRight) {
+                leftPos = maxRight - (tooltipRect.width / 2);
+            }
+
+            tooltip.style.left = leftPos + 'px';
+            tooltip.style.top = topPos + 'px';
             tooltip.classList.add('show');
         });
 
